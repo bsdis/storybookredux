@@ -1,9 +1,6 @@
-import * as React from 'react';
-import { store } from '../src/store';
-import { Provider } from 'react-redux'
+import * as React from "react";
+import { Provider } from "react-redux";
 
-export const withProvider = (story) => (
-  <Provider store={store}>
-    { story() }
-  </Provider>
-)
+export const withProvider = (store) => (story) => {
+  return <Provider store={store}>{story}</Provider>;
+};

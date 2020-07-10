@@ -4,6 +4,7 @@ import {
   combineReducers,
   PayloadAction,
   createAsyncThunk,
+  ConfigureStoreOptions,
 } from "@reduxjs/toolkit";
 
 export type hittype = [number, number, number, number, number, number, string];
@@ -36,11 +37,15 @@ const rootReducer = combineReducers({
   frachits: frachitsSlice.reducer,
 });
 
-const store = configureStore({
+// create a store creator that the story provider can use and allow you to set the default state
+const createStore = (opts?: Partial<ConfigureStoreOptions>) => configureStore({
   reducer: rootReducer,
+  preloadedState: opts?.preloadedState
 });
 
-export { store };
+const store = createStore();
+
+export { store, createStore };
 export const frachitActions = { ...frachitsSlice.actions, addHitThunk };
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
